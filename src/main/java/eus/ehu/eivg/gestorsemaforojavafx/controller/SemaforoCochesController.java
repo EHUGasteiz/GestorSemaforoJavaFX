@@ -1,6 +1,7 @@
 package eus.ehu.eivg.gestorsemaforojavafx.controller;
 
 import eus.ehu.eivg.gestorsemaforojavafx.model.GestorSemaforos;
+import javafx.beans.binding.Bindings;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,7 +12,7 @@ import javafx.scene.image.ImageView;
 import java.net.URL;
 import java.util.*;
 
-public class SemaforoCochesController implements Initializable, Observer {
+public class SemaforoCochesController implements Initializable {
 
     GestorSemaforos model = GestorSemaforos.getGestorSemaforos();
 
@@ -33,21 +34,15 @@ public class SemaforoCochesController implements Initializable, Observer {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing controller");
-        model.addObserver(this);
-        update(null, null);
-    }
-
-    @Override
-    public void update(Observable o, Object arg) {
-        contLabel.setText(String.valueOf(model.getContador()));
-        if (model.estaVerde()) {
-            contLabel.setStyle("-fx-text-fill:red;-fx-background-color:black;");
-            redLightImageView.setImage(redLight.get());
-            greenLightImageView.setImage(lightOff.get());
-        } else {
-            contLabel.setStyle("-fx-text-fill:green;-fx-background-color:black;");
-            redLightImageView.setImage(lightOff.get());
-            greenLightImageView.setImage(greenLight.get());
-        }
+        contLabel.textProperty().bind(model.contProperty().asString());
+        contLabel.styleProperty().bind(Bindings.when(model.estaVerdeProperty())
+                .then("-fx-text-fill:red;-fx-background-color:black;")
+                .otherwise("-fx-text-fill:green;-fx-background-color:black"));
+        redLightImageView.imageProperty().bind(Bindings.when(model.estaVerdeProperty())
+                .then(redLight)
+                .otherwise(lightOff));
+        greenLightImageView.imageProperty().bind(Bindings.when(model.estaVerdeProperty())
+                .then(lightOff)
+                .otherwise(greenLight));
     }
 }
