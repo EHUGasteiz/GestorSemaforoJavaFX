@@ -14,5 +14,6 @@ public class SemaforoMVCApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         ViewFactory.mostrarSemaforoCoches();
+        ViewFactory.mostrarSemaforoPeatones();
     }
 }

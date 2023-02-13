@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="450.0"
+      prefWidth="150.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="eus.ehu.eivg.gestorsemaforojavafx.controller.SemaforoPeatonesController">
+   <Label fx:id="contLabel" alignment="CENTER" prefHeight="126.0" prefWidth="221.0"
+          style="-fx-background-color: black; -fx-text-fill: green;" text="Label" textOverrun="CLIP">
+      <font>
+         <Font size="74.0"/>
+      </font>
+   </Label>
+   <ImageView fx:id="redLightImageView" fitHeight="150.0" fitWidth="218.0" pickOnBounds="true" preserveRatio="true"/>
+   <ImageView fx:id="greenLightImageView" fitHeight="150.0" fitWidth="218.0" layoutX="10.0" layoutY="136.0"
+              pickOnBounds="true" preserveRatio="true"/>
+   <Button mnemonicParsing="false" onAction="#pedirPasoAction" prefHeight="95.0" prefWidth="217.0" text="Pedir paso"/>
+</VBox>
