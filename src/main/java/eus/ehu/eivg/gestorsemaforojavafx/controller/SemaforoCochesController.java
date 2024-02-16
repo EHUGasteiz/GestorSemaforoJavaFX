@@ -1,6 +1,7 @@
 package eus.ehu.eivg.gestorsemaforojavafx.controller;
 
 import eus.ehu.eivg.gestorsemaforojavafx.model.GestorSemaforos;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -9,9 +10,10 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 
 import java.net.URL;
-import java.util.*;
+import java.util.Objects;
+import java.util.ResourceBundle;
 
-public class SemaforoCochesController implements Initializable, Observer {
+public class SemaforoCochesController implements Initializable{
 
     GestorSemaforos model = GestorSemaforos.getGestorSemaforos();
 
@@ -33,12 +35,12 @@ public class SemaforoCochesController implements Initializable, Observer {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing controller");
-        model.addObserver(this);
-        update(null, null);
+        model.addListener(this::update);
+        update(null);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
+
+    public void update(Observable o) {
         contLabel.setText(String.valueOf(model.getContador()));
         if (model.estaVerde()) {
             contLabel.setStyle("-fx-text-fill:red;-fx-background-color:black;");

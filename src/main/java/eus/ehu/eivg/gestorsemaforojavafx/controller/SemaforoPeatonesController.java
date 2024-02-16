@@ -1,6 +1,7 @@
 package eus.ehu.eivg.gestorsemaforojavafx.controller;
 
 import eus.ehu.eivg.gestorsemaforojavafx.model.GestorSemaforos;
+import javafx.beans.Observable;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -10,11 +11,9 @@ import javafx.scene.image.ImageView;
 
 import java.net.URL;
 import java.util.Objects;
-import java.util.Observable;
-import java.util.Observer;
 import java.util.ResourceBundle;
 
-public class SemaforoPeatonesController implements Initializable, Observer {
+public class SemaforoPeatonesController implements Initializable{
     private final GestorSemaforos model = GestorSemaforos.getGestorSemaforos();
     private final SimpleObjectProperty<Image> lightOff = new SimpleObjectProperty<>(new Image(Objects.requireNonNull(getClass().getResource("/images/circulo_apagado.png")).toExternalForm()));
     private final SimpleObjectProperty<Image> redLight = new SimpleObjectProperty<>(new Image(Objects.requireNonNull(getClass().getResource("/images/circulo_rojo.png")).toExternalForm()));
@@ -38,12 +37,12 @@ public class SemaforoPeatonesController implements Initializable, Observer {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         System.out.println("Initializing controller");
-        model.addObserver(this);
-        update(null, null);
+        model.addListener(this::update);
+        update(null);
     }
 
-    @Override
-    public void update(Observable o, Object arg) {
+
+    public void update(Observable o) {
 
         contLabel.setText(String.valueOf(model.getContador()));
         if (model.estaVerde()) {

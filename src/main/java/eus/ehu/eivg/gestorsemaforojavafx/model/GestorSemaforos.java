@@ -1,7 +1,11 @@
 package eus.ehu.eivg.gestorsemaforojavafx.model;
 
 import javafx.application.Platform;
-import java.util.Observable;
+import javafx.beans.InvalidationListener;
+import javafx.beans.Observable;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -11,9 +15,11 @@ import java.util.TimerTask;
  *
  * @author mikel
  */
-public class GestorSemaforos  extends Observable {
+public class GestorSemaforos implements Observable {
         private static final int PERIODO = 15;
         private static final GestorSemaforos mGestorSemaforos = new GestorSemaforos();
+        private List<InvalidationListener> observers;
+
         private boolean estaVerde; // Indica si el semáforo está verde para los peatones o no
         private int cont;
 
@@ -29,6 +35,9 @@ public class GestorSemaforos  extends Observable {
             };
             Timer timer = new Timer();
             timer.scheduleAtFixedRate(timerTask, 0, 1000);
+
+            // Crear la lista de observadores
+            observers = new ArrayList<>();
         }
 
         /**
@@ -62,8 +71,8 @@ public class GestorSemaforos  extends Observable {
                 cont = PERIODO;
                 estaVerde = true;
             }
+            // Notificar a los observadores
             setChanged();
-            notifyObservers();
         }
 
         /**
@@ -76,7 +85,10 @@ public class GestorSemaforos  extends Observable {
                 estaVerde = !estaVerde;
             }
             setChanged();
-            notifyObservers();
+        }
+
+        private void setChanged() {
+            observers.forEach(o -> o.invalidated(this));
         }
 
 
@@ -86,4 +98,13 @@ public class GestorSemaforos  extends Observable {
     }
 
 
+    @Override
+    public void addListener(InvalidationListener listener) {
+        observers.add(listener);
+    }
+
+    @Override
+    public void removeListener(InvalidationListener listener) {
+        observers.remove(listener);
+    }
 }
