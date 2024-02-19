@@ -4,4 +4,4 @@ Este programa ilustra distintas alternativas para implementar el programa de eje
 
 1. Arquitectura monolítica (Rama **Master**)
 2. Model-View-Controller, utilizando *Observer* (Rama **Observer**)
-3. Model-View-Controller, utilizando *PropertyChangeListener* (Rama **Listener**)
+3. Model-View-Controller, utilizando *Bindings* (Rama **Bindings**)
